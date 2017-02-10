@@ -3,7 +3,6 @@ import {Component} from '@angular/core';
 import {CartService} from "../../providers/cart-service";
 import {LogService} from "../../providers/log-service";
 import {CepService} from "../../providers/cep-service";
-import {ViewChild} from "@angular/core/src/metadata/di";
 
 /*
  Generated class for the Cart page.

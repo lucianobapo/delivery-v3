@@ -14,8 +14,10 @@ import {LogService} from "./log-service";
 @Injectable()
 export class DataService {
 
-    private showing = 0;
-    private loader;
+    protected showing = 0;
+    protected loader;
+
+    protected resourceUrl = 'http://erpnet-v5.ilhanet.com';
 
     constructor(public http: Http,
                 public loadingController: LoadingController,
@@ -32,7 +34,7 @@ export class DataService {
         headers.append('Content-Type', 'application/json');
         let options = new RequestOptions({headers : headers});
         this.showLoading();
-        return this.http.post('http://erpnet-v5.localhost.com/erpnet-api/'+resource, body, options);
+        return this.http.post(this.resourceUrl+'/erpnet-api/'+resource, body, options);
     }
 
     httpGet(resource){
@@ -40,7 +42,7 @@ export class DataService {
         headers.append('Accept', 'application/x.erpnet.v1+json');
         let options = new RequestOptions({headers : headers});
         this.showLoading();
-        return this.http.get('http://erpnet-v5.localhost.com/erpnet-api/'+resource, options);
+        return this.http.get(this.resourceUrl+'/erpnet-api/'+resource, options);
     }
 
     cepGet(resource){
