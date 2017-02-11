@@ -12,7 +12,7 @@ gulp --gulpfile=gulpfileErpnetWidgetResource.js
 ***Updating run***
 ```shell
 git cmt && ssh delivery-v3.ilhanet.com
-cd code/erpnet-v5/ && git pull && composer install && exit
+cd code/delivery-v3/ && git pull && exit
 ```
 
 ## Production command

@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#4e8ef7">
 
     <!-- cordova.js required for cordova apps -->
-    <script src="cordova.js"></script>
+    <!--<script src="cordova.js"></script>-->
 
     <!-- un-comment this code to enable service worker
     <script>
@@ -26,7 +26,95 @@
         }
     </script>-->
 
-    <link href="build/main.css" rel="stylesheet">
+    <!--<link href="build/main.css" rel="stylesheet">-->
+
+    <style>
+        .loader,
+        .loader:after {
+            border-radius: 50%;
+            width: 10em;
+            height: 10em;
+        }
+        .loader {
+            margin: 60px auto;
+            font-size: 10px;
+            position: relative;
+            text-indent: -9999em;
+            border-top: 1.1em solid rgba(56, 126, 245, 0.2);
+            border-right: 1.1em solid rgba(56, 126, 245, 0.2);
+            border-bottom: 1.1em solid rgba(56, 126, 245, 0.2);
+            border-left: 1.1em solid #387ef5;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-animation: load8 1.1s infinite linear;
+            animation: load8 1.1s infinite linear;
+        }
+        @-webkit-keyframes load8 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes load8 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <script type="text/javascript">
+        (function(doc, elementName) {
+            var js,
+                    fjs = doc.getElementsByTagName(elementName)[0],
+                    addScript = function(url, id) {
+                        if (doc.getElementById(id)) {return;}
+                        js = doc.createElement('script');
+                        js.src = url;
+                        js.type = 'text/javascript';
+                        js.async = 'true';
+                        js.onload = js.onreadystatechange = function() {
+                            var rs = this.readyState;
+                            if (rs && rs != 'complete' && rs != 'loaded') return;
+                            try { } catch (e) {console.log(e)}
+                        };
+                        id && (js.id = id);
+                        fjs.parentNode.insertBefore(js, fjs);
+                    },
+                    addLink = function(url, id) {
+                        if (doc.getElementById(id)) {return;}
+                        js = doc.createElement('link');
+                        js.href = url;
+                        js.rel = 'stylesheet';
+                        id && (js.id = id);
+                        fjs.parentNode.insertBefore(js, fjs);
+                    };
+
+            // Google Analytics
+//        add('https:://ssl.google-analytics.com/ga.js', 'ga');
+            // Google+ button
+//        add('https://apis.google.com/js/plusone.js');
+            // Facebook SDK
+//        add('https://connect.facebook.net/en_US/all.js', 'facebook-jssdk');
+            // Twitter SDK
+//        add('https://platform.twitter.com/widgets.js', 'twitter-wjs');
+
+            addLink('build/main.css');
+            addScript('cordova.js');
+            addScript('build/polyfills.js');
+            addScript('build/main.js');
+        }(document, 'script'));
+
+    </script>
 
     <meta name="robots" content="index, follow">
     <meta name="author" content="Luciano Porto - ilhanet.com">
@@ -55,14 +143,25 @@
 </head>
 <body>
 
+<div style="text-align: center">
+    <img style="max-width: 100%"
+         alt="delivery24horas.com - Delivery Rio das Ostras 24 horas - Entrega de Bebidas e Cigarros"
+         title="delivery24horas.com - Delivery Rio das Ostras 24 horas - Entrega de Bebidas e Cigarros"
+         src="https://storage.googleapis.com/ilhanet-140808.appspot.com/logo/logo-delivery-24-horas-rio-das-ostras.png"
+    >
+</div>
+<h1 style="font-family: Roboto, 'Helvetica Neue', sans-serif;font-size: 22px;text-align: center;">Delivery 24 Horas em Rio das Ostras</h1>
+<h2 style="text-align: center" *ngIf="false">Carregando...</h2>
+<div class="loader" *ngIf="false">Carregando...</div>
+
 <!-- Ionic's root component and where the app will load -->
 <ion-app></ion-app>
 
 <!-- The polyfills js is generated during the build process -->
-<script src="build/polyfills.js"></script>
+<!--<script src="build/polyfills.js"></script>-->
 
 <!-- The bundle js is generated during the build process -->
-<script src="build/main.js"></script>
+<!--<script src="build/main.js"></script>-->
 
 </body>
 </html>
