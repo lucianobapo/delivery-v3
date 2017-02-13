@@ -32,6 +32,10 @@
   "devDependencies": {
     "@ionic/app-scripts": "^1.0.0",
     "font-awesome": "^4.7.0",
+    "gulp": "^3.9.1",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-preprocess": "^2.0.0",
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
