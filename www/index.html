@@ -72,50 +72,6 @@
         }
     </style>
 
-    <script type="text/javascript">
-        (function(doc, elementName) {
-            var js,
-                    fjs = doc.getElementsByTagName(elementName)[0],
-                    addScript = function(url, id) {
-                        if (doc.getElementById(id)) {return;}
-                        js = doc.createElement('script');
-                        js.src = url;
-                        js.type = 'text/javascript';
-                        js.async = 'true';
-                        js.onload = js.onreadystatechange = function() {
-                            var rs = this.readyState;
-                            if (rs && rs != 'complete' && rs != 'loaded') return;
-                            try { } catch (e) {console.log(e)}
-                        };
-                        id && (js.id = id);
-                        fjs.parentNode.insertBefore(js, fjs);
-                    },
-                    addLink = function(url, id) {
-                        if (doc.getElementById(id)) {return;}
-                        js = doc.createElement('link');
-                        js.href = url;
-                        js.rel = 'stylesheet';
-                        id && (js.id = id);
-                        fjs.parentNode.insertBefore(js, fjs);
-                    };
-
-            // Google Analytics
-//        add('https:://ssl.google-analytics.com/ga.js', 'ga');
-            // Google+ button
-//        add('https://apis.google.com/js/plusone.js');
-            // Facebook SDK
-//        add('https://connect.facebook.net/en_US/all.js', 'facebook-jssdk');
-            // Twitter SDK
-//        add('https://platform.twitter.com/widgets.js', 'twitter-wjs');
-
-            addLink('build/main.css');
-            addScript('cordova.js');
-            addScript('build/polyfills.js');
-            addScript('build/main.js');
-        }(document, 'script'));
-
-    </script>
-
     <meta name="robots" content="index, follow">
     <meta name="author" content="Luciano Porto - ilhanet.com">
 
@@ -143,14 +99,14 @@
 </head>
 <body>
 
-<div style="text-align: center">
-    <img style="max-width: 100%"
-         alt="delivery24horas.com - Delivery Rio das Ostras 24 horas - Entrega de Bebidas e Cigarros"
-         title="delivery24horas.com - Delivery Rio das Ostras 24 horas - Entrega de Bebidas e Cigarros"
-         src="https://storage.googleapis.com/ilhanet-140808.appspot.com/logo/logo-delivery-24-horas-rio-das-ostras.png"
-    >
-</div>
-<h1 style="font-family: Roboto, 'Helvetica Neue', sans-serif;font-size: 22px;text-align: center;">Delivery 24 Horas em Rio das Ostras</h1>
+<!--<div style="text-align: center">-->
+    <!--<img style="max-width: 100%"-->
+         <!--alt="delivery24horas.com - Delivery Rio das Ostras 24 horas - Entrega de Bebidas e Cigarros"-->
+         <!--title="delivery24horas.com - Delivery Rio das Ostras 24 horas - Entrega de Bebidas e Cigarros"-->
+         <!--src="https://storage.googleapis.com/ilhanet-140808.appspot.com/logo/logo-delivery-24-horas-rio-das-ostras.png"-->
+    <!--&gt;-->
+<!--</div>-->
+<h1 style="font-family: 'Helvetica Neue', sans-serif; font-size: 22px; text-align: center;">Delivery 24 Horas em Rio das Ostras</h1>
 <h2 style="text-align: center" *ngIf="false">Carregando...</h2>
 <div class="loader" *ngIf="false">Carregando...</div>
 
@@ -162,6 +118,52 @@
 
 <!-- The bundle js is generated during the build process -->
 <!--<script src="build/main.js"></script>-->
+
+<script type="text/javascript">
+    (function(doc, elementName) {
+        var elToInsert,
+                fjs = doc.getElementsByTagName(elementName)[0],
+                addScript = function(url, id) {
+                    if (doc.getElementById(id)) {return;}
+                    elToInsert = doc.createElement('script');
+                    elToInsert.src = url;
+                    elToInsert.type = 'text/javascript';
+                    elToInsert.async = 'true';
+//                        elToInsert.onload = elToInsert.onreadystatechange = function() {
+//                            var rs = this.readyState;
+//                            if (rs && rs != 'complete' && rs != 'loaded') return;
+//                            try { } catch (e) {console.log(e)}
+//                        };
+                    id && (elToInsert.id = id);
+                    fjs.parentNode.insertBefore(elToInsert, fjs);
+                },
+                addLink = function(url, id) {
+                    if (doc.getElementById(id)) {return;}
+                    elToInsert = doc.createElement('link');
+                    elToInsert.href = url;
+                    elToInsert.type = 'text/css';
+                    elToInsert.rel = 'stylesheet';
+                    id && (elToInsert.id = id);
+                    fjs.parentNode.insertBefore(elToInsert, fjs);
+
+                };
+
+        // Google Analytics
+//        add('https:://ssl.google-analytics.com/ga.js', 'ga');
+        // Google+ button
+//        add('https://apis.google.com/js/plusone.js');
+        // Facebook SDK
+//        add('https://connect.facebook.net/en_US/all.js', 'facebook-jssdk');
+        // Twitter SDK
+//        add('https://platform.twitter.com/widgets.js', 'twitter-wjs');
+
+        addLink('build/main.css');
+        addScript('cordova.js');
+        addScript('build/polyfills.js');
+        addScript('build/main.js');
+    }(document, 'script'));
+
+</script>
 
 </body>
 </html>
