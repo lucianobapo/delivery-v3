@@ -53,6 +53,14 @@ export class DataService {
         return this.http.get('https://viacep.com.br/ws/'+resource+'/json/', options);
     }
 
+    simpleGet(resource){
+        let headers = new Headers();
+        // headers.append('Accept', 'application/json');
+        let options = new RequestOptions({headers : headers});
+        // this.showLoading();
+        return this.http.get(resource, options);
+    }
+
     handleError(error) {
         this.loader.dismissAll();
         this.loader = this.loadingController.create({

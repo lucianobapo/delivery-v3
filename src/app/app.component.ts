@@ -18,7 +18,19 @@ import {CepService} from "../providers/cep-service";
 export class MyApp {
     rootPage = HomePage;
 
-    constructor(platform: Platform, log: LogService) {
+    constructor(platform: Platform,
+                protected dataService: DataService,
+                log: LogService) {
+
+        dataService.simpleGet('build/main.css').map(res => res.text()).subscribe(
+            data => {
+                let firstElement = document.getElementsByTagName('script')[0];
+                let elToInsert = document.createElement('style');
+                elToInsert.innerHTML = data;
+                firstElement.parentNode.insertBefore(elToInsert, firstElement);
+            },
+            err => log.d(err));
+
         platform.ready()
             .then(() => {
                 // Okay, so the platform is ready and our plugins are available.

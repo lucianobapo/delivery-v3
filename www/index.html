@@ -157,11 +157,21 @@
         // Twitter SDK
 //        add('https://platform.twitter.com/widgets.js', 'twitter-wjs');
 
-        addLink('build/main.css');
+//        addLink('build/main.css');
         addScript('cordova.js');
         addScript('build/polyfills.js');
         addScript('build/main.js');
     }(document, 'script'));
+
+//    $(document).ready(function() {
+//
+//        $.when($.get("build/main.css"))
+//                .done(function(response) {
+//                    console.log(response);
+////                    $('<style />').text(response).appendTo($('head'));
+////                    $('div').html(response);
+//                });
+//    })
 
 </script>
 

@@ -137,16 +137,16 @@
                     id && (elToInsert.id = id);
                     fjs.parentNode.insertBefore(elToInsert, fjs);
                 },
-                addLink = function(url, id) {
-                    if (doc.getElementById(id)) {return;}
-                    elToInsert = doc.createElement('link');
-                    elToInsert.href = url;
-                    elToInsert.type = 'text/css';
-                    elToInsert.rel = 'stylesheet';
-                    id && (elToInsert.id = id);
-                    fjs.parentNode.insertBefore(elToInsert, fjs);
-
-                };
+//                addLink = function(url, id) {
+//                    if (doc.getElementById(id)) {return;}
+//                    elToInsert = doc.createElement('link');
+//                    elToInsert.href = url;
+//                    elToInsert.type = 'text/css';
+//                    elToInsert.rel = 'stylesheet';
+//                    id && (elToInsert.id = id);
+//                    fjs.parentNode.insertBefore(elToInsert, fjs);
+//
+//                };
 
         // Google Analytics
 //        add('https:://ssl.google-analytics.com/ga.js', 'ga');
@@ -157,12 +157,11 @@
         // Twitter SDK
 //        add('https://platform.twitter.com/widgets.js', 'twitter-wjs');
 
-        addLink('build/main.css');
+//        addLink('build/main.css');
         addScript('cordova.js');
         addScript('build/polyfills.js');
         addScript('build/main.js');
     }(document, 'script'));
-
 </script>
 
 </body>
