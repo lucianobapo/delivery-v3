@@ -112,7 +112,9 @@
                     id && (elToInsert.id = id);
                     fjs.parentNode.insertBefore(elToInsert, fjs);
                 };
+        <!-- @if CORDOVA -->
         addScript('cordova.js');
+        <!-- @endif -->
         addScript('build/polyfills.js');
         addScript('build/main.js');
     }(document, 'script'));
