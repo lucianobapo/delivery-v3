@@ -5,6 +5,7 @@ import {HomePage} from '../pages/home/home';
 import {ProductPage} from "../pages/product/product";
 import {CartPage} from "../pages/cart/cart";
 import {HintPopoverPage} from "../pages/hint-popover/hint-popover";
+import {CheckoutPage} from "../pages/checkout/checkout";
 
 @NgModule({
     declarations: [
@@ -12,6 +13,7 @@ import {HintPopoverPage} from "../pages/hint-popover/hint-popover";
         HomePage,
         ProductPage,
         CartPage,
+        CheckoutPage,
         HintPopoverPage
     ],
     imports: [
@@ -26,6 +28,7 @@ import {HintPopoverPage} from "../pages/hint-popover/hint-popover";
         HomePage,
         ProductPage,
         CartPage,
+        CheckoutPage,
         HintPopoverPage
     ],
     providers: [

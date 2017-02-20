@@ -1,0 +1,42 @@
+<!--
+  Generated template for the Checkout page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>
+            <ion-icon name="checkbox-outline"></ion-icon> Resumo
+        </ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <h1 text-center>Pedido nº {{ id }} criado</h1>
+            <p>Você receberá por email o andamento do seu pedido.</p>
+        </ion-item>
+        <ion-item-divider color="light">Itens</ion-item-divider>
+        <ion-item *ngFor="let item of order_items">
+            <ion-badge color="secondary" item-left>{{ item.quantidade }} x</ion-badge>
+            <h2>{{ item.valor_unitario | currency:'BRL':true }}</h2>
+            <p style="white-space: normal;">{{ cartService.getNome(item.product_id) }}</p>
+        </ion-item>
+
+        <ion-item-divider color="light">Forma de pagamento</ion-item-divider>
+        <ion-item>{{ pagamento }}</ion-item>
+
+        <ion-item-divider color="light">Endereço de Entrega</ion-item-divider>
+        <ion-item>
+            <p>{{ address.cep }}</p>
+            <p>{{ address.logradouro }}</p>
+            <p>{{ address.numero }}</p>
+            <p>{{ address.bairro }}</p>
+            <p>{{ address.obs }}</p>
+        </ion-item>
+    </ion-list>
+</ion-content>

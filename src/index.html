@@ -85,8 +85,10 @@
 </head>
 <body>
 
+<!-- @if !CORDOVA -->
 <div style="text-align: center">
-    <img style="max-width: 100%"
+    <img
+         width="200" height="199"
          alt="delivery24horas.com - Delivery Rio das Ostras 24 horas - Entrega de Bebidas e Cigarros"
          title="delivery24horas.com - Delivery Rio das Ostras 24 horas - Entrega de Bebidas e Cigarros"
          src="https://storage.googleapis.com/ilhanet-140808.appspot.com/logo/logo-delivery-24-horas-rio-das-ostras.png"
@@ -95,6 +97,7 @@
 <h1 style="font-family: 'Helvetica Neue', sans-serif; font-size: 22px; text-align: center;">Delivery 24 Horas em Rio das Ostras</h1>
 <h2 style="text-align: center" *ngIf="false">Carregando...</h2>
 <div class="loader" *ngIf="false">Carregando...</div>
+<!-- @endif -->
 
 <!-- Ionic's root component and where the app will load -->
 <ion-app></ion-app>

@@ -17,6 +17,7 @@ export class CartService {
     //     items: []
     // };
     protected data;
+    protected orderCreated;
     protected mandante = 'ilhanet';
 
     protected order: FormGroup;
@@ -158,18 +159,33 @@ export class CartService {
 
     submitOrder() {
         this.order.controls['posted_at'].setValue(CartService.getFormattedDate());
-        this.log.d('enviando', this.order.value);
-        this.dataService.httpPost('delivery', this.order.value)
+        // this.log.d('enviando', this.order.value);
+        return this.dataService.httpPost('delivery', this.order.value)
             .map(res => {
                 this.data = res.json().data;
                 return this.data;
-            })
-            .subscribe(
-                data => {
-                    this.log.d('sucesso', data);
-                },
-                err => this.dataService.handleError(err),
-                () => this.dataService.dismiss());
+            });
+    }
+
+    handleError(error) {
+        this.dataService.handleError(error);
+    }
+
+    dismiss() {
+        this.dataService.dismiss();
+    }
+
+    clearItems(orderCreated) {
+       return this.dataService.httpGet('order/'+orderCreated.id)
+            .map(res => res.json().data);
+    }
+
+    setOrderCreated(order){
+        this.orderCreated = order;
+    }
+    getOrderCreated(){
+        if(this.orderCreated) return this.orderCreated;
+        return null;
     }
 
     protected static getFormattedDate(){

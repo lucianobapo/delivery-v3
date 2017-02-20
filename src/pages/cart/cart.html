@@ -39,7 +39,7 @@
             <em>Nenhum item adicionado</em>
         </ion-item>
     </ion-list>
-    <form [formGroup]="cartService.formBuild('order')" (ngSubmit)="cartService.submitOrder()">
+    <form [formGroup]="cartService.formBuild('order')" (ngSubmit)="submitOrder()">
         <ion-list radio-group [formControl]="cartService.formBuild('pagamento')">
             <ion-item-divider color="light">
                 Forma de pagamento
