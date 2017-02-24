@@ -50,7 +50,7 @@
         <img cache="true" width="80" height="80" alt="Imagem do produto: {{product.nome}}"
                  src="https://storage.googleapis.com/ilhanet-140808.appspot.com/thumbnails/{{product.imagem}}">
 
-        <div style="height: 95px;" padding-left padding-right>
+        <div style="" padding-left padding-right>
             <h4 style="">
                 <span *ngIf="hasInCart(product.id)">{{ getCartQnty(product.id) }} x </span>
                 {{product.valorUnitVenda | currency:'BRL':true}}
