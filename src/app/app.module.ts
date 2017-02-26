@@ -1,4 +1,4 @@
-import {NgModule, ErrorHandler} from '@angular/core';
+import {NgModule, ErrorHandler, LOCALE_ID} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -32,7 +32,8 @@ import {CheckoutPage} from "../pages/checkout/checkout";
         HintPopoverPage
     ],
     providers: [
-        {provide: ErrorHandler, useClass: IonicErrorHandler}
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        {provide: LOCALE_ID, useValue: "pt-BR"}
     ]
 })
 export class AppModule {

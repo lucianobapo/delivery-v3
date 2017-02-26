@@ -23,6 +23,14 @@ module.exports = {
       src: ['{{ROOT}}/node_modules/ionic-angular/polyfills/polyfills.js'],
       dest: '{{BUILD}}'
     },
+    // copyIntl: {
+    //   src: ['{{ROOT}}/node_modules/intl/dist/Intl.min.js'],
+    //   dest: '{{BUILD}}'
+    // },
+    // copyIntlPt: {
+    //   src: ['{{ROOT}}/node_modules/intl/locale-data/jsonp/pt-BR.js'],
+    //   dest: '{{BUILD}}'
+    // },
     copyFontsFontAwesome: {
         src: '{{ROOT}}/node_modules/font-awesome/fonts/**/*',
         dest: '{{WWW}}/assets/fonts'
