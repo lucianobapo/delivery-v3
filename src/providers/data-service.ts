@@ -18,6 +18,7 @@ export class DataService {
     protected loader;
 
     protected resourceUrl = 'https://erpnet-v5.ilhanet.com';
+    // protected resourceUrl = 'https://erpnet-v5.localhost.com';
 
     constructor(public http: Http,
                 public loadingController: LoadingController,

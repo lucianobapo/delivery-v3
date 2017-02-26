@@ -21,6 +21,9 @@
                 <p class="inputError" *ngIf="cartService.fieldErr('items')">
                     Necessário adicionar algum item
                 </p>
+                <p class="inputError" *ngIf="cartService.fieldErr('items', 'minimum_value')">
+                    Valor total deve ser acima de {{ 20 | currency:'BRL':true }}
+                </p>
             </div>
         </ion-item-divider>
 
@@ -28,7 +31,7 @@
             <ion-badge color="secondary" item-left>{{ item.quantidade }} x</ion-badge>
             <h2>{{ item.valor_unitario | currency:'BRL':true }}</h2>
             <p style="white-space: normal;">{{ cartService.getNome(item.product_id) }}</p>
-            <button ion-button icon-only item-right clear large color="danger" (click)="cartService.removeItem(item)">
+            <button type="button" ion-button icon-only item-right clear large color="danger" (click)="cartService.removeItem(item)">
                 <ion-icon name="trash"></ion-icon>
             </button>
         </ion-item>
@@ -54,9 +57,9 @@
                 <ion-label>
                     Cartão de Débito
                     <div class="pull-right">
-                        <i class="fa fa-cc-visa fa-2x"></i>
-                        <i class="fa fa-cc-mastercard fa-2x"></i>
-                        <i class="fa fa-cc-diners-club fa-2x"></i>
+                        <div class="button"><i class="brand master-brand"></i></div>
+                        <div class="button"><i class="brand visa-brand"></i></div>
+                        <div class="button"><i class="brand elo-brand"></i></div>
                     </div>
                 </ion-label>
                 <ion-radio value="vistacd"></ion-radio>
@@ -66,9 +69,9 @@
                 <ion-label>
                     Cartão Crédito
                     <div class="pull-right">
-                        <i class="fa fa-cc-visa fa-2x"></i>
-                        <i class="fa fa-cc-mastercard fa-2x"></i>
-                        <i class="fa fa-cc-diners-club fa-2x"></i>
+                        <div class="button"><i class="brand master-brand"></i></div>
+                        <div class="button"><i class="brand visa-brand"></i></div>
+                        <div class="button"><i class="brand elo-brand"></i></div>
                     </div>
                 </ion-label>
                 <ion-radio value="vistacc"></ion-radio>
@@ -118,14 +121,14 @@
                     <ion-input formControlName="email" type="email" placeholder="Ex.: exemplo@gmail.com"></ion-input>
                 </ion-item>
 
-                <ion-item>
-                    <ion-label>SMS</ion-label>
-                    <ion-toggle formControlName="smsCheck" checked="false"></ion-toggle>
-                </ion-item>
-                <ion-item *ngIf="cartService.contactsChecked('smsCheck')">
-                    <ion-label stacked>Seu número SMS:</ion-label>
-                    <ion-input formControlName="sms" type="text" placeholder="Ex.: (22)999 999 999"></ion-input>
-                </ion-item>
+                <!--<ion-item>-->
+                    <!--<ion-label>SMS</ion-label>-->
+                    <!--<ion-toggle formControlName="smsCheck" checked="false"></ion-toggle>-->
+                <!--</ion-item>-->
+                <!--<ion-item *ngIf="cartService.contactsChecked('smsCheck')">-->
+                    <!--<ion-label stacked>Seu número SMS:</ion-label>-->
+                    <!--<ion-input formControlName="sms" type="text" placeholder="Ex.: (22)999 999 999"></ion-input>-->
+                <!--</ion-item>-->
 
                 <ion-item>
                     <ion-label>Whatsapp</ion-label>
@@ -153,11 +156,15 @@
             </ion-item>
             <ion-item *ngIf="foundCep && foundCep.length>0">
                 <ion-list inset>
-                    <ion-item-divider color="light">Encontrados:</ion-item-divider>
-                    <button type="button" ion-item *ngFor="let item of foundCep" (click)="onClickFoundAddress(item)">
+                    <ion-item-divider color="light">
+                        <h2>Buscamos nos Correios</h2>
+                        <p>Encontramos estes:</p>
+                        <em class="pull-right">Clique para selecionar</em>
+                    </ion-item-divider>
+                    <ion-item *ngFor="let item of foundCep" (click)="onClickFoundAddress(item)">
+                        <h2>{{ item.logradouro }}<span *ngIf="item.complemento.length">, {{ item.complemento }}</span></h2>
                         <p>{{ item.cep }} - {{ item.bairro }}</p>
-                        <p>{{ item.logradouro }}<span *ngIf="item.complemento.length">, {{ item.complemento }}</span></p>
-                    </button>
+                    </ion-item>
                 </ion-list>
             </ion-item>
 
@@ -176,11 +183,15 @@
             </ion-item>
             <ion-item *ngIf="foundAddresses && foundAddresses.length>0">
                 <ion-list inset>
-                    <ion-item-divider color="light">Encontrados:</ion-item-divider>
-                    <button type="button" ion-item *ngFor="let item of foundAddresses" (click)="onClickFoundAddress(item)">
+                    <ion-item-divider color="light">
+                        <h2>Buscamos nos Correios</h2>
+                        <p>Encontramos estes:</p>
+                        <em class="pull-right">Clique para selecionar</em>
+                    </ion-item-divider>
+                    <ion-item *ngFor="let item of foundAddresses" (click)="onClickFoundAddress(item)">
+                        <h2>{{ item.logradouro }}<span *ngIf="item.complemento.length">, {{ item.complemento }}</span></h2>
                         <p>{{ item.cep }} - {{ item.bairro }}</p>
-                        <p>{{ item.logradouro }}<span *ngIf="item.complemento.length">, {{ item.complemento }}</span></p>
-                    </button>
+                    </ion-item>
                 </ion-list>
             </ion-item>
 

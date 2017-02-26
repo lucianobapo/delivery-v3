@@ -159,7 +159,7 @@ export class CartService {
 
     submitOrder() {
         this.order.controls['posted_at'].setValue(CartService.getFormattedDate());
-        // this.log.d('enviando', this.order.value);
+        this.log.l('enviando', this.order.value);
         return this.dataService.httpPost('delivery', this.order.value)
             .map(res => {
                 this.data = res.json().data;
@@ -211,24 +211,42 @@ export class CartService {
     }
 
     protected static contactsValidator(group: FormGroup):any {
-        let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if (!group.controls['emailCheck'].value && !group.controls['smsCheck'].value && !group.controls['whatsappCheck'].value)
+            return {contactsInvalid: true};
 
-        let passouEmailCheck = (group.controls['emailCheck'].value && group.controls['email'].value!='' && emailPattern.test(group.controls['email'].value));
-        let passouSmsCheck = (group.controls['smsCheck'].value && group.controls['sms'].value!='');
-        let passouWhatsappCheck = (group.controls['whatsappCheck'].value && group.controls['whatsapp'].value!='');
-        if (passouEmailCheck || passouSmsCheck || passouWhatsappCheck)
-            return null;
-        else{
-            if (group.controls['emailCheck'].value && !passouEmailCheck) return { emailInvalid: true };
-            if (group.controls['smsCheck'].value && !passouSmsCheck) return { smsInvalid: true };
-            if (group.controls['whatsappCheck'].value && !passouWhatsappCheck) return { whatsappInvalid: true };
-            return { contactsInvalid: true };
-        }
+        let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        let passouEmailCheck = (group.controls['email'].value!='' && emailPattern.test(group.controls['email'].value));
+        if (group.controls['emailCheck'].value && !passouEmailCheck) return {emailInvalid: true};
+
+        let passouSmsCheck = (group.controls['sms'].value!='');
+        if (group.controls['smsCheck'].value && !passouSmsCheck) return {smsInvalid: true};
+
+        let passouWhatsappCheck = (group.controls['whatsapp'].value!='');
+        if (group.controls['whatsappCheck'].value && !passouWhatsappCheck) return {whatsappInvalid: true};
+
+        return null;
+
+        // let passouSmsCheck = (group.controls['smsCheck'].value && group.controls['sms'].value!='');
+        // let passouWhatsappCheck = (group.controls['whatsappCheck'].value && group.controls['whatsapp'].value!='');
+        // if (passouEmailCheck || passouSmsCheck || passouWhatsappCheck)
+        //     return null;
+        // else{
+        //     if (group.controls['emailCheck'].value && !passouEmailCheck) return { emailInvalid: true };
+        //     if (group.controls['smsCheck'].value && !passouSmsCheck) return { smsInvalid: true };
+        //     if (group.controls['whatsappCheck'].value && !passouWhatsappCheck) return { whatsappInvalid: true };
+        //     return { contactsInvalid: true };
+        // }
     }
 
     protected static itemsValidator(control: AbstractControl):any {
-        if(control.value.constructor == Array && control.value.length>0)
-            return null;
+        if(control.value.constructor == Array && control.value.length>0){
+            let soma = 0;
+            control.value.map(item => {
+                soma = soma + item.quantidade * item.valor_unitario;
+            });
+            if (soma<20) return { minimum_value: true };
+            else return null;
+        }
         else return { required: true };
     }
 

@@ -10,6 +10,7 @@ var htmlmin = require('gulp-htmlmin');
 gulp.task('default', [
     // 'uglify', // dependency: core
     'preprocess-html',
+    'generate-service-worker',
     // 'build-vendor'
 ], function() {
     return gutil.log('default DONE');
@@ -64,19 +65,19 @@ gulp.task('generate-service-worker', function(callback) {
         // ],
         runtimeCaching: [
             {
-                urlPattern: /^https:\/\/delivery-v3\.localhost\.com\/assets\/fonts/,
+                urlPattern: /^https:\/\/delivery-v3\.(localhost|ilhanet)\.com\/assets\/fonts/,
                 handler: 'cacheFirst',
                 options: {
                     debug: true,
                     cache: {
                         maxEntries: 10,
                         name: 'assets-cache',
-                        maxAgeSeconds: 180
+                        maxAgeSeconds: 604800
                     }
                 }
             },
             {
-                urlPattern: /^https:\/\/erpnet-v5\.ilhanet\.com\/erpnet-api/,
+                urlPattern: /^https:\/\/erpnet-v5\.(localhost|ilhanet)\.com\/erpnet-api/,
                 handler: 'fastest',
                 options: {
                     debug: true,
@@ -90,7 +91,19 @@ gulp.task('generate-service-worker', function(callback) {
                     cache: {
                         maxEntries: 10,
                         name: 'ilhanet-140808-cache',
-                        maxAgeSeconds: 180
+                        maxAgeSeconds: 604800
+                    }
+                }
+            },
+            {
+                urlPattern: /^https:\/\/viacep\.com\.br\/ws/,
+                handler: 'cacheFirst',
+                options: {
+                    debug: true,
+                    cache: {
+                        maxEntries: 10,
+                        name: 'viacep-cache',
+                        maxAgeSeconds: 604800
                     }
                 }
             },

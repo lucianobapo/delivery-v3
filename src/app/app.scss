@@ -32,3 +32,24 @@ $fa-font-path: '/assets/fonts';
   font-size: small;
   font-style: italic;
 }
+
+.brand{
+  content: "";
+  display: block;
+  background-image: url('https://storage.googleapis.com/ilhanet-140808.appspot.com/pagseguro.sprites.brands.png');
+}
+.elo-brand{
+  background-position: -101px -101px;
+  width: 36px;
+  height: 15px;
+}
+.visa-brand{
+  background-position: -98px -149px;
+  width: 40px;
+  height: 13px;
+}
+.master-brand{
+  background-position: -34px -149px;
+  width: 33px;
+  height: 20px;
+}

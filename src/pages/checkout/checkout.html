@@ -16,9 +16,9 @@
 
 <ion-content padding>
     <ion-list>
-        <ion-item>
-            <h1 text-center>Pedido nº {{ id }} criado</h1>
-            <p>Você receberá por email o andamento do seu pedido.</p>
+        <ion-item text-center>
+            <h1>Pedido nº {{ id }} criado</h1>
+            <p style="white-space: normal">Você receberá o andamento do seu pedido pelos contatos informados.</p>
         </ion-item>
         <ion-item-divider color="light">Itens</ion-item-divider>
         <ion-item *ngFor="let item of order_items">
@@ -26,9 +26,18 @@
             <h2>{{ item.valor_unitario | currency:'BRL':true }}</h2>
             <p style="white-space: normal;">{{ cartService.getNome(item.product_id) }}</p>
         </ion-item>
+        <ion-item text-right>
+            Valor Total: {{ cartService.getTotalCart() | currency:'BRL':true }}
+        </ion-item>
 
         <ion-item-divider color="light">Forma de pagamento</ion-item-divider>
         <ion-item>{{ pagamento }}</ion-item>
+
+        <ion-item-divider color="light">Seus Dados</ion-item-divider>
+        <ion-item>{{ nome }}</ion-item>
+        <ion-item *ngFor="let item of contacts">
+            <p>{{ item.contact_type.charAt(0).toUpperCase() + item.contact_type.slice(1) }}: {{ item.contact_data }}</p>
+        </ion-item>
 
         <ion-item-divider color="light">Endereço de Entrega</ion-item-divider>
         <ion-item>
@@ -36,7 +45,10 @@
             <p>{{ address.logradouro }}</p>
             <p>{{ address.numero }}</p>
             <p>{{ address.bairro }}</p>
-            <p>{{ address.obs }}</p>
+            <p>{{ address.complemento }}</p>
         </ion-item>
+
+        <ion-item-divider color="light" *ngIf="observacao">Observação</ion-item-divider>
+        <ion-item *ngIf="observacao">{{ observacao }}</ion-item>
     </ion-list>
 </ion-content>

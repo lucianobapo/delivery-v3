@@ -15,14 +15,17 @@ import {LogService} from "../../providers/log-service";
 })
 export class CheckoutPage implements OnInit {
     public id;
+    public nome;
     public pagamento;
+    public observacao;
     public order_items;
+    public contacts;
     public address = {
         cep:'',
         logradouro:'',
         numero:'',
         bairro:'',
-        obs:'',
+        complemento:'',
     };
 
     constructor(protected navCtrl: NavController,
@@ -46,8 +49,14 @@ export class CheckoutPage implements OnInit {
 
         if(order != null){
             if (order.hasOwnProperty('id')) this.id = order.id;
+            if (order.hasOwnProperty('observacao')) this.observacao = order.observacao;
             if (order.hasOwnProperty('shared_order_payment')) this.pagamento = order.shared_order_payment.descricao;
             if (order.hasOwnProperty('address')) this.address = order.address;
+            if (order.hasOwnProperty('partner')) {
+                this.nome = order.partner.nome;
+                if (order.partner.hasOwnProperty('contacts'))
+                    this.contacts = order.partner.contacts;
+            }
             if (order.hasOwnProperty('order_items')) this.order_items = order.order_items;
         }
     }

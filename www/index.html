@@ -85,7 +85,6 @@
 </head>
 <body>
 
-<!-- @if !CORDOVA -->
 <div style="text-align: center">
     <img
          width="200" height="199"
@@ -97,7 +96,6 @@
 <h1 style="font-family: 'Helvetica Neue', sans-serif; font-size: 22px; text-align: center;">Delivery 24 Horas em Rio das Ostras</h1>
 <h2 style="text-align: center" *ngIf="false">Carregando...</h2>
 <div class="loader" *ngIf="false">Carregando...</div>
-<!-- @endif -->
 
 <!-- Ionic's root component and where the app will load -->
 <ion-app></ion-app>
@@ -123,9 +121,6 @@
                     id && (elToInsert.id = id);
                     fjs.parentNode.insertBefore(elToInsert, fjs);
                 };
-        <!-- @if CORDOVA -->
-        addScript('cordova.js');
-        <!-- @endif -->
         addScript('build/polyfills.js');
         addScript('build/main.js');
     }(document, 'script'));
