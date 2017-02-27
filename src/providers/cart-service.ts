@@ -64,6 +64,7 @@ export class CartService {
             bairro:  this.bairro,
             numero: this.numero,
             complemento: [''],
+            troco: [''],
             observacao: [''],
             contacts: this.contacts,
             items: this.items
@@ -159,6 +160,12 @@ export class CartService {
 
     submitOrder() {
         this.order.controls['posted_at'].setValue(CartService.getFormattedDate());
+        if (this.order.controls['troco'].value!=''){
+            let newObservacao = 'Troco: '+this.order.controls['troco'].value;
+            if (this.order.controls['observacao'].value!='') newObservacao = newObservacao +' - '+this.order.controls['observacao'].value;
+            this.order.controls['observacao'].setValue(newObservacao);
+        }
+
         this.log.l('enviando', this.order.value);
         return this.dataService.httpPost('delivery', this.order.value)
             .map(res => {
