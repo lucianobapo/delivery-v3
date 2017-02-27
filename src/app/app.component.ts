@@ -29,7 +29,7 @@ export class MyApp {
                 elToInsert.innerHTML = data;
                 firstElement.parentNode.insertBefore(elToInsert, firstElement);
             },
-            err => log.d(err));
+            err => log.e(err));
 
         platform.ready()
             .then(() => {

@@ -7,7 +7,7 @@
         <ion-buttons end *ngIf="isNotSearching()">
             <button ion-button icon-only (click)="goToCartPage()">
                 <ion-icon name="cart"></ion-icon>
-                <ion-badge color="secondary" *ngIf="hasCartValue()">{{ getTotalCart() | currency:'BRL':true }}</ion-badge>
+                <ion-badge color="secondary" *ngIf="hasCartValue()">{{ getTotalCart() | currency:'BRL':true:'1.2-2' }}</ion-badge>
             </button>
             <button ion-button icon-only (click)="startSearch($event)">
                 <ion-icon name="search"></ion-icon>
