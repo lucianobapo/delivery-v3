@@ -23,11 +23,11 @@
         <ion-item-divider color="light">Itens</ion-item-divider>
         <ion-item *ngFor="let item of order_items">
             <ion-badge color="secondary" item-left>{{ item.quantidade }} x</ion-badge>
-            <h2>{{ item.valor_unitario | currency:'BRL':true }}</h2>
+            <h2>{{ item.valor_unitario | currency:'BRL':true:'1.2-2' }}</h2>
             <p style="white-space: normal;">{{ cartService.getNome(item.product_id) }}</p>
         </ion-item>
         <ion-item text-right>
-            Valor Total: {{ cartService.getTotalCart() | currency:'BRL':true }}
+            Valor Total: {{ cartService.getTotalCart() | currency:'BRL':true:'1.2-2' }}
         </ion-item>
 
         <ion-item-divider color="light">Forma de pagamento</ion-item-divider>

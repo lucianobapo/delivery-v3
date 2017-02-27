@@ -22,21 +22,21 @@
                     Necessário adicionar algum item
                 </p>
                 <p class="inputError" *ngIf="cartService.fieldErr('items', 'minimum_value')">
-                    Valor total deve ser acima de {{ 20 | currency:'BRL':true }}
+                    Valor total deve ser acima de {{ 20 | currency:'BRL':true:'1.2-2' }}
                 </p>
             </div>
         </ion-item-divider>
 
         <ion-item *ngFor="let item of cartService.getCartItems()">
             <ion-badge color="secondary" item-left>{{ item.quantidade }} x</ion-badge>
-            <h2>{{ item.valor_unitario | currency:'BRL':true }}</h2>
+            <h2>{{ item.valor_unitario | currency:'BRL':true:'1.2-2' }}</h2>
             <p style="white-space: normal;">{{ cartService.getNome(item.product_id) }}</p>
             <button type="button" ion-button icon-only item-right clear large color="danger" (click)="cartService.removeItem(item)">
                 <ion-icon name="trash"></ion-icon>
             </button>
         </ion-item>
         <ion-item *ngIf="cartService.hasCartValue()" text-right>
-            Valor Total: {{ cartService.getTotalCart() | currency:'BRL':true }}
+            Valor Total: {{ cartService.getTotalCart() | currency:'BRL':true:'1.2-2' }}
         </ion-item>
         <ion-item *ngIf="!cartService.hasCartValue()" text-center>
             <em>Nenhum item adicionado</em>
