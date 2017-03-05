@@ -59,17 +59,17 @@
         </div>
 
         <ion-row>
-            <ion-col>
+            <!--<ion-col>-->
                 <!--<button no-padding ion-button icon-only clear>-->
                     <!--<ion-icon name="heart-outline" color="danger"></ion-icon>-->
                 <!--</button>-->
-            </ion-col>
-            <ion-col text-center>
+            <!--</ion-col>-->
+            <ion-col text-left>
                 <button ion-button icon-only outline (click)="removeToCart(product.id)">
                     <ion-icon name="remove"></ion-icon>
                 </button>
             </ion-col>
-            <ion-col text-left>
+            <ion-col text-right>
                 <button ion-button icon-only outline (click)="presentPopover($event);addToCart(product.id)">
                     <ion-icon name="add"></ion-icon>
                 </button>
