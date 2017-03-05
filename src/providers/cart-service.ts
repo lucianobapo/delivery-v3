@@ -80,6 +80,7 @@ export class CartService {
         let itemFields = {
             mandante: this.mandante,
             cost_id: this.productService.getCostId(productId),
+            nome: this.productService.getNome(productId),
             product_id: productId,
             quantidade: 1,
             valor_unitario: this.productService.getValorVenda(productId)

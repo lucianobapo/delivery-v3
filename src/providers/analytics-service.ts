@@ -14,6 +14,7 @@ window.ga = window.ga || {};
 export class AnalyticsService {
 
     protected googleAnalytics;
+    protected transactionId = Date.now();
 
     constructor(protected titleService: Title) {
         console.log('Hello AnalyticsService Provider');
@@ -25,8 +26,9 @@ export class AnalyticsService {
     }
 
     sendTransactionGa(){
+        this.renewTransactionId();
         this.googleAnalytics('ecommerce:addTransaction', {
-            'id': '1234',                     // Transaction ID. Required.
+            'id': this.transactionId,                     // Transaction ID. Required.
             'affiliation': 'Delivery24Horas',   // Affiliation or store name.
             // 'revenue': '11.99',               // Grand Total.
             // 'shipping': '5',                  // Shipping.
@@ -36,17 +38,22 @@ export class AnalyticsService {
     }
 
     sendOrderGa(){
-        this.googleAnalytics('send', 'event', 'Enviar Pedido', 'submit');
+        this.googleAnalytics('send', 'event', 'Order', 'Submit');
         this.googleAnalytics('ecommerce:send');
     }
 
     sendPageviewGa(page='/home'){
-        let params = {
-            'hitType': 'pageview',
-            'title': this.titleService.getTitle(),
-            'page': page
-        };
-        this.googleAnalytics('send', params);
+        this.googleAnalytics('send', 'event', {
+            'eventCategory': 'Pages',
+            'eventAction': 'PageEnter',
+            'eventLabel': page
+        });
+        // let params = {
+        //     'hitType': 'pageview',
+        //     'title': this.titleService.getTitle(),
+        //     'page': page
+        // };
+        // this.googleAnalytics('send', params);
 
     }
 
@@ -56,14 +63,14 @@ export class AnalyticsService {
             'eventAction': 'AddItem'
         });
         this.googleAnalytics('ecommerce:addItem', {
-            'id': '1234',                     // Transaction ID. Required.
+            'id': this.transactionId,                     // Transaction ID. Required.
             'sku': itemFields.product_id.toString(),
-            'name': 'Android T-Shirt',
+            'name': itemFields.nome,
             'price': itemFields.valor_unitario.toString(),
             'quantity': itemFields.quantidade
         });
 
-        this.googleAnalytics('ecommerce:send');
+        // this.googleAnalytics('ecommerce:send');
         // ga('ec:addProduct', {'id': 'P12345'});
         // ga('ec:addProduct', {'name': 'Android T-Shirt'});
         // ga('ec:addProduct', {'price': '29.20'});
@@ -71,4 +78,7 @@ export class AnalyticsService {
     }
 
 
+    private renewTransactionId() {
+        this.transactionId = Date.now();
+    }
 }
