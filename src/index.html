@@ -127,12 +127,17 @@
         addScript('cordova.js');
         <!-- @endif -->
 //        addScript('https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.min.js');
-        addScript('https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/shim.min.js');
-        addScript('build/polyfills.js');
-        addScript('https://cdn.polyfill.io/v2/polyfill.js?features=Intl.~locale.pt-BR');
-        addScript('build/main.js');
+//        addScript('https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/shim.min.js');
+//        addScript('build/polyfills.js');
+//        addScript('https://cdn.polyfill.io/v2/polyfill.js?features=Intl.~locale.pt-BR');
+//        addScript('build/main.js');
     }(document, 'script'));
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/shim.min.js" type="text/javascript" async></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.js?features=Intl.~locale.pt-BR" type="text/javascript" async></script>
+<script src="build/polyfills.js" type="text/javascript" async></script>
+<script src="build/main.js" type="text/javascript" async></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -147,8 +152,6 @@
 //    ga('require', 'ec');
 
 </script>
-
-<!--<script src="build/main.js" type="text/javascript" async></script>-->
 
 </body>
 </html>
