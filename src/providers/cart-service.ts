@@ -4,6 +4,7 @@ import {LogService} from "./log-service";
 import {ProductService} from './product-service';
 import {DataService} from "./data-service";
 import {FormBuilder, FormControl, Validators, FormGroup, AbstractControl} from "@angular/forms";
+import {AnalyticsService} from "./analytics-service";
 
 /*
  Generated class for the CartService provider.
@@ -34,6 +35,7 @@ export class CartService {
     constructor(protected productService: ProductService,
                 protected log: LogService,
                 protected dataService: DataService,
+                protected analyticsService: AnalyticsService,
                 protected formBuilder: FormBuilder) {
         this.log.l('Hello CartService Provider');
 
@@ -69,20 +71,28 @@ export class CartService {
             contacts: this.contacts,
             items: this.items
         });
+
+        this.analyticsService.sendTransactionGa();
     }
 
     add(productId) {
         let updatedItems = this.items.value;
+        let itemFields = {
+            mandante: this.mandante,
+            cost_id: this.productService.getCostId(productId),
+            product_id: productId,
+            quantidade: 1,
+            valor_unitario: this.productService.getValorVenda(productId)
+        };
+
+        this.analyticsService.sendAddProductGa(itemFields);
+
         if (this.foundItem(productId))
             updatedItems[this.itemIndex(productId)].quantidade++;
         else
-            updatedItems.push({
-                mandante: this.mandante,
-                cost_id: this.productService.getCostId(productId),
-                product_id: productId,
-                quantidade: 1,
-                valor_unitario: this.productService.getValorVenda(productId)
-            });
+            {
+                updatedItems.push(itemFields);
+            }
         this.items.setValue(updatedItems);
     }
 
@@ -159,6 +169,7 @@ export class CartService {
     }
 
     submitOrder() {
+        this.analyticsService.sendOrderGa();
         this.order.controls['posted_at'].setValue(CartService.getFormattedDate());
         if (this.order.controls['troco'].value!=''){
             let newObservacao = 'Troco: '+this.order.controls['troco'].value;

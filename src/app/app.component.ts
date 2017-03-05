@@ -10,10 +10,19 @@ import {CartService} from '../providers/cart-service';
 import {ProductService} from "../providers/product-service";
 import {CategoriesService} from "../providers/categories-service";
 import {CepService} from "../providers/cep-service";
+import {AnalyticsService} from "../providers/analytics-service";
 
 @Component({
     templateUrl: 'app.html',
-    providers: [DataService, LogService, CepService, CartService, CategoriesService, ProductService]
+    providers: [
+        DataService,
+        LogService,
+        CepService,
+        CartService,
+        CategoriesService,
+        ProductService,
+        AnalyticsService
+    ]
 })
 export class MyApp {
     rootPage = HomePage;

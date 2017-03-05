@@ -31,14 +31,20 @@ gulp.task('preprocess-html', function() {
         });
 });
 
-const psi = require('psi');
+
 
 // Run PageSpeed Insights
-gulp.task('pagespeed', cb =>
+gulp.task('pagespeed', cb =>{
+
+    var psi = require('psi');
     // Output a formatted report to the terminal
-    psi.output('delivery-v3.ilhanet.com').then(() => {
-        console.log('done');
-    })
+    psi.output('https://delivery-v3.ilhanet.com').then(
+        (att) => console.log('done',att),
+        (att) => console.log('reject',att)
+    )
+}
+
+
     // Update the below URL to the public URL of your site
     // psi('delivery-v3.ilhanet.com', {
     //     strategy: 'mobile'
@@ -47,6 +53,15 @@ gulp.task('pagespeed', cb =>
     //     // key: 'YOUR_API_KEY'
     // }, cb)
 );
+
+gulp.task('pagespeed2', cb =>{
+    var psi = require('psi');
+    // Output a formatted report to the terminal
+    psi.output('https://delivery24horas.com').then(
+        (att) => console.log('done',att),
+        (att) => console.log('reject',att)
+    )
+});
 
 gulp.task('generate-service-worker', function(callback) {
     var path = require('path');

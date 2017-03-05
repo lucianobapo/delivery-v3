@@ -10,6 +10,7 @@ import {ProductPage} from "../product/product";
 import {BasePage} from "../base-page";
 import {CartService} from "../../providers/cart-service";
 import {CartPage} from "../cart/cart";
+import {AnalyticsService} from "../../providers/analytics-service";
 
 @Component({
     selector: 'page-home',
@@ -24,8 +25,14 @@ export class HomePage extends BasePage implements OnInit {
                 protected log: LogService,
                 protected categoriesService: CategoriesService,
                 protected productService: ProductService,
+                protected analyticsService: AnalyticsService,
                 protected cartService: CartService) {
         super();
+    }
+
+    ionViewDidLoad() {
+        this.log.l('ionViewDidLoad HomePage');
+        this.analyticsService.sendPageviewGa('/home');
     }
 
     ngOnInit() {

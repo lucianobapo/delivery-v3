@@ -5,6 +5,7 @@ import {LogService} from "../../providers/log-service";
 import {CepService} from "../../providers/cep-service";
 import {NavController} from "ionic-angular";
 import {CheckoutPage} from "../checkout/checkout";
+import {AnalyticsService} from "../../providers/analytics-service";
 
 /*
  Generated class for the Cart page.
@@ -27,11 +28,13 @@ export class CartPage{
     constructor(protected navCtrl: NavController,
                 protected cartService: CartService,
                 protected cepService: CepService,
+                protected analyticsService: AnalyticsService,
                 protected log: LogService) {
     }
 
     ionViewDidLoad() {
         this.log.l('ionViewDidLoad CartPage');
+        this.analyticsService.sendPageviewGa('/cart');
     }
 
     onKeyUpLogradouro($event){

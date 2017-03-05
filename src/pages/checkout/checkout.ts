@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {CartService} from "../../providers/cart-service";
 import {LogService} from "../../providers/log-service";
+import {AnalyticsService} from "../../providers/analytics-service";
 
 /*
  Generated class for the Checkout page.
@@ -31,13 +32,14 @@ export class CheckoutPage implements OnInit {
     constructor(protected navCtrl: NavController,
                 protected cartService: CartService,
                 protected navParams: NavParams,
+                protected analyticsService: AnalyticsService,
                 protected log: LogService) {
         this.fillOrder();
     }
 
     ionViewDidLoad() {
         this.log.l('ionViewDidLoad CheckoutPage');
-
+        this.analyticsService.sendPageviewGa('/checkout');
     }
 
     ngOnInit() {

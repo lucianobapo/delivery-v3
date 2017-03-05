@@ -7,6 +7,7 @@ import {ProductService} from "../../providers/product-service";
 import {CategoriesService} from "../../providers/categories-service";
 import {CartPage} from "../cart/cart";
 import {HintPopoverPage} from "../hint-popover/hint-popover";
+import {AnalyticsService} from "../../providers/analytics-service";
 
 /*
  Generated class for the Product page.
@@ -41,6 +42,7 @@ export class ProductPage extends BasePage implements OnInit {
                 protected cartService: CartService,
                 protected productService: ProductService,
                 protected categoriesService: CategoriesService,
+                protected analyticsService: AnalyticsService,
                 protected popoverCtrl: PopoverController) {
         super();
     }
@@ -54,6 +56,7 @@ export class ProductPage extends BasePage implements OnInit {
     }
 
     ngOnInit() {
+        this.analyticsService.sendPageviewGa('/product');
         let categoryId = this.navParams.get("categoryId");
         this.categoriesService.findAll().subscribe(
             data => {
