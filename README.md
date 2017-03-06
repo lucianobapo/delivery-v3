@@ -11,7 +11,7 @@ gulp --gulpfile=gulpfileErpnetWidgetResource.js
 
 ***Updating run***
 ```shell
-npm run build && npm run minify && gulp
+npm run build && npm run minify && gulp --production
 git cmt && ssh delivery-v3.ilhanet.com
 cd ~/code/delivery-v3/ && git pull && exit
 ```

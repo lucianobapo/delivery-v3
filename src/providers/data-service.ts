@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {LoadingController} from 'ionic-angular';
-import {Headers, RequestOptions, Http} from '@angular/http';
+import {Headers, RequestOptions, Http, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Observable';
 import {LogService} from "./log-service";
+import {ConnectivityMonitorService} from "./connectivity-monitor-service";
 
 /*
  Generated class for the DataService provider.
@@ -20,9 +20,10 @@ export class DataService {
     protected resourceUrl = 'https://erpnet-v5.ilhanet.com';
     // protected resourceUrl = 'https://erpnet-v5.localhost.com';
 
-    constructor(public http: Http,
-                public loadingController: LoadingController,
-                private log: LogService) {
+    constructor(protected http: Http,
+                protected loadingController: LoadingController,
+                protected connectivityMonitorService: ConnectivityMonitorService,
+                protected log: LogService) {
         log.l('Hello DataService Provider');
         this.loader = this.loadingController.create({
             content: "Carregando..."
@@ -35,6 +36,7 @@ export class DataService {
         headers.append('Content-Type', 'application/json');
         let options = new RequestOptions({headers : headers});
         this.showLoading();
+        this.connectivityMonitorService.setOnline();
         return this.http.post(this.resourceUrl+'/erpnet-api/'+resource, body, options);
     }
 
@@ -43,6 +45,7 @@ export class DataService {
         headers.append('Accept', 'application/x.erpnet.v1+json');
         let options = new RequestOptions({headers : headers});
         this.showLoading();
+        this.connectivityMonitorService.setOnline();
         return this.http.get(this.resourceUrl+'/erpnet-api/'+resource, options);
     }
 
@@ -51,6 +54,7 @@ export class DataService {
         headers.append('Accept', 'application/json');
         let options = new RequestOptions({headers : headers});
         // this.showLoading();
+        this.connectivityMonitorService.setOnline();
         return this.http.get('https://viacep.com.br/ws/'+resource+'/json/', options);
     }
 
@@ -59,16 +63,25 @@ export class DataService {
         // headers.append('Accept', 'application/json');
         let options = new RequestOptions({headers : headers});
         // this.showLoading();
+        this.connectivityMonitorService.setOnline();
         return this.http.get(resource, options);
     }
 
-    handleError(error) {
+    handleError(error: Response | any) {
         this.loader.dismissAll();
         this.loader = this.loadingController.create({
             content: "Carregando..."
         });
-        this.log.e(error);
-        return Observable.throw(error.json().error || 'Server error');
+        // let err = error.json();
+        // this.log.d('handleError:', error.json());
+        // if (err.hasOwnProperty('currentTarget') && err.currentTarget.status == 0)
+        this.connectivityMonitorService.setOffline();
+        // this.log.d('connection:', this.connectivityMonitorService.isOnline());
+        // if(Observable.hasOwnProperty('throw'))
+        //     return Observable.throw(error.json().error || 'Server error');
+        // else
+        return error;
+        // return Promise.reject('Ah, não!');
     }
 
     dismiss() {
@@ -86,4 +99,7 @@ export class DataService {
         if (this.showing==0) this.loader.present();
         this.showing++;
     }
+
+    isOffline() { return this.connectivityMonitorService.isOffline(); }
+    isOnline() { return this.connectivityMonitorService.isOnline(); }
 }

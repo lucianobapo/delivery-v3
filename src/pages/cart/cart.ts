@@ -6,6 +6,7 @@ import {CepService} from "../../providers/cep-service";
 import {NavController} from "ionic-angular";
 import {CheckoutPage} from "../checkout/checkout";
 import {AnalyticsService} from "../../providers/analytics-service";
+import {ConnectivityMonitorService} from "../../providers/connectivity-monitor-service";
 
 /*
  Generated class for the Cart page.
@@ -29,7 +30,8 @@ export class CartPage{
                 protected cartService: CartService,
                 protected cepService: CepService,
                 protected analyticsService: AnalyticsService,
-                protected log: LogService) {
+                protected log: LogService,
+                protected connectivityMonitorService: ConnectivityMonitorService) {
     }
 
     ionViewDidLoad() {

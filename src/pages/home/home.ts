@@ -11,6 +11,7 @@ import {BasePage} from "../base-page";
 import {CartService} from "../../providers/cart-service";
 import {CartPage} from "../cart/cart";
 import {AnalyticsService} from "../../providers/analytics-service";
+import {ConnectivityMonitorService} from "../../providers/connectivity-monitor-service";
 
 @Component({
     selector: 'page-home',
@@ -20,13 +21,15 @@ import {AnalyticsService} from "../../providers/analytics-service";
 export class HomePage extends BasePage implements OnInit {
     @ViewChild('search') searchInput;
     protected categories;
+    protected popoverOffline;
 
     constructor(protected navCtrl: NavController,
                 protected log: LogService,
                 protected categoriesService: CategoriesService,
                 protected productService: ProductService,
                 protected analyticsService: AnalyticsService,
-                protected cartService: CartService) {
+                protected cartService: CartService,
+                protected connectivityMonitorService: ConnectivityMonitorService) {
         super();
     }
 
@@ -49,4 +52,5 @@ export class HomePage extends BasePage implements OnInit {
     goToCartPage(){
         this.navCtrl.push(CartPage);
     }
+
 }

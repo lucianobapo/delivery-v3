@@ -224,9 +224,18 @@
                 <ion-input formControlName="observacao" type="text" placeholder="Ex.: enviar mensagem ao chegar"></ion-input>
             </ion-item>
             <ion-item>
-                <button ion-button full large type="submit" [disabled]="cartService.fieldIsInvalid('order')">Solicitar Entrega</button>
+                <button ion-button full large type="submit" [disabled]="cartService.fieldIsInvalid('order')||connectivityMonitorService.isOffline()">Solicitar Entrega</button>
             </ion-item>
         </ion-list>
     </form>
 
 </ion-content>
+
+<ion-footer *ngIf="connectivityMonitorService.isOffline()">
+    <ion-toolbar color="warn">
+        <p text-center>
+            <ion-icon name="warning"></ion-icon>
+            Ops! Sem conexão com nossos servidores no momento
+        </p>
+    </ion-toolbar>
+</ion-footer>

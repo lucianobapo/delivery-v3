@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
-import {Title} from "@angular/platform-browser";
+import {LogService} from "./log-service";
+import {ConnectivityMonitorService} from "./connectivity-monitor-service";
 
 window.ga = window.ga || {};
 
@@ -16,16 +17,18 @@ export class AnalyticsService {
     protected googleAnalytics;
     protected transactionId = Date.now();
 
-    constructor(protected titleService: Title) {
-        console.log('Hello AnalyticsService Provider');
+    constructor(protected log: LogService,
+                protected connectivityMonitorService: ConnectivityMonitorService) {
+        this.log.l('Hello AnalyticsService Provider');
 
         if(window.hasOwnProperty('ga')) {
             this.googleAnalytics = window.ga;
-            console.log(window.ga);
+            // console.log(window.ga);
         }
     }
 
     sendTransactionGa(){
+        if (this.connectivityMonitorService.isOffline()) return;
         this.renewTransactionId();
         this.googleAnalytics('ecommerce:addTransaction', {
             'id': this.transactionId,                     // Transaction ID. Required.
@@ -38,11 +41,13 @@ export class AnalyticsService {
     }
 
     sendOrderGa(){
+        if (this.connectivityMonitorService.isOffline()) return;
         this.googleAnalytics('send', 'event', 'Order', 'Submit');
         this.googleAnalytics('ecommerce:send');
     }
 
     sendPageviewGa(page='/home'){
+        if (this.connectivityMonitorService.isOffline()) return;
         this.googleAnalytics('send', 'event', {
             'eventCategory': 'Pages',
             'eventAction': 'PageEnter',
@@ -58,6 +63,7 @@ export class AnalyticsService {
     }
 
     sendAddProductGa(itemFields){
+        if (this.connectivityMonitorService.isOffline()) return;
         this.googleAnalytics('send', 'event', {
             'eventCategory': 'Products',
             'eventAction': 'AddItem'

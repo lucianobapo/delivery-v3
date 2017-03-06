@@ -11,6 +11,8 @@ import {ProductService} from "../providers/product-service";
 import {CategoriesService} from "../providers/categories-service";
 import {CepService} from "../providers/cep-service";
 import {AnalyticsService} from "../providers/analytics-service";
+import {ConnectivityMonitorService} from "../providers/connectivity-monitor-service";
+import {ServiceWorker} from "../providers/service-worker";
 
 @Component({
     templateUrl: 'app.html',
@@ -21,7 +23,9 @@ import {AnalyticsService} from "../providers/analytics-service";
         CartService,
         CategoriesService,
         ProductService,
-        AnalyticsService
+        AnalyticsService,
+        ConnectivityMonitorService,
+        ServiceWorker
     ]
 })
 export class MyApp {
@@ -29,19 +33,24 @@ export class MyApp {
 
     constructor(platform: Platform,
                 protected dataService: DataService,
-                log: LogService) {
+                protected log: LogService,
+                protected connectivityMonitorService: ConnectivityMonitorService) {
 
-        dataService.simpleGet('build/main.css').map(res => res.text()).subscribe(
-            data => {
-                let firstElement = document.getElementsByTagName('script')[0];
-                let elToInsert = document.createElement('style');
-                elToInsert.innerHTML = data;
-                firstElement.parentNode.insertBefore(elToInsert, firstElement);
-            },
-            err => log.e(err));
+        dataService.simpleGet('build/main.css')
+            .map(res => res.text())
+            .subscribe(
+                data => {
+                    let firstElement = document.getElementsByTagName('script')[0];
+                    let elToInsert = document.createElement('style');
+                    elToInsert.innerHTML = data;
+                    firstElement.parentNode.insertBefore(elToInsert, firstElement);
+                },
+                err => log.e(err)
+            );
 
         platform.ready()
             .then(() => {
+                connectivityMonitorService.startWatching();
                 // Okay, so the platform is ready and our plugins are available.
                 // Here you can do any higher level native things you might need.
                 if (platform.is('cordova')){

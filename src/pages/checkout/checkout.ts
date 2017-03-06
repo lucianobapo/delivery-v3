@@ -3,6 +3,7 @@ import {NavController, NavParams} from 'ionic-angular';
 import {CartService} from "../../providers/cart-service";
 import {LogService} from "../../providers/log-service";
 import {AnalyticsService} from "../../providers/analytics-service";
+import {ConnectivityMonitorService} from "../../providers/connectivity-monitor-service";
 
 /*
  Generated class for the Checkout page.
@@ -33,7 +34,8 @@ export class CheckoutPage implements OnInit {
                 protected cartService: CartService,
                 protected navParams: NavParams,
                 protected analyticsService: AnalyticsService,
-                protected log: LogService) {
+                protected log: LogService,
+                protected connectivityMonitorService: ConnectivityMonitorService) {
         this.fillOrder();
     }
 

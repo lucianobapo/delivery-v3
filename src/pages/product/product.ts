@@ -8,10 +8,12 @@ import {CategoriesService} from "../../providers/categories-service";
 import {CartPage} from "../cart/cart";
 import {HintPopoverPage} from "../hint-popover/hint-popover";
 import {AnalyticsService} from "../../providers/analytics-service";
+import {ConnectivityMonitorService} from "../../providers/connectivity-monitor-service";
+import {ServiceWorker} from "../../providers/service-worker";
 
 /*
  Generated class for the Product page.
-
+window
  See http://ionicframework.com/docs/v2/components/#navigation for more info on
  Ionic pages and navigation.
  */
@@ -31,7 +33,7 @@ export class ProductPage extends BasePage implements OnInit {
     protected categoryIcon;
 
     protected showToTop = false;
-    protected scrollTop = 0;
+    protected scrollTop = 0;declare
 
     protected showHint;
 
@@ -43,7 +45,9 @@ export class ProductPage extends BasePage implements OnInit {
                 protected productService: ProductService,
                 protected categoriesService: CategoriesService,
                 protected analyticsService: AnalyticsService,
-                protected popoverCtrl: PopoverController) {
+                protected popoverCtrl: PopoverController,
+                protected serviceWorker: ServiceWorker,
+                protected connectivityMonitorService: ConnectivityMonitorService) {
         super();
     }
 
@@ -72,7 +76,10 @@ export class ProductPage extends BasePage implements OnInit {
                     }
                 });
         },
-            err => this.categoriesService.handleError(err),
+            err => {
+                if(this.serviceWorker.disabled()) this.navCtrl.pop();
+                this.categoriesService.handleError(err)
+            },
             () => this.categoriesService.dismiss());
 
 

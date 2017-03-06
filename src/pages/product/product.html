@@ -64,12 +64,12 @@
                     <!--<ion-icon name="heart-outline" color="danger"></ion-icon>-->
                 <!--</button>-->
             <!--</ion-col>-->
-            <ion-col text-left>
+            <ion-col text-center>
                 <button ion-button icon-only outline (click)="removeToCart(product.id)">
                     <ion-icon name="remove"></ion-icon>
                 </button>
             </ion-col>
-            <ion-col text-right>
+            <ion-col text-center>
                 <button ion-button icon-only outline (click)="presentPopover($event);addToCart(product.id)">
                     <ion-icon name="add"></ion-icon>
                 </button>
@@ -77,3 +77,12 @@
         </ion-row>
     </div>
 </ion-content>
+
+<ion-footer *ngIf="connectivityMonitorService.isOffline()">
+    <ion-toolbar color="warn">
+        <p text-center>
+            <ion-icon name="warning"></ion-icon>
+            Ops! Sem conexão com nossos servidores no momento
+        </p>
+    </ion-toolbar>
+</ion-footer>

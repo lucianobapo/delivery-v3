@@ -70,3 +70,12 @@
     </ion-list>
 
 </ion-content>
+
+<ion-footer *ngIf="connectivityMonitorService.isOffline()">
+    <ion-toolbar color="warn">
+        <p text-center>
+            <ion-icon name="warning"></ion-icon>
+            Ops! Sem conexão com nossos servidores no momento
+        </p>
+    </ion-toolbar>
+</ion-footer>
