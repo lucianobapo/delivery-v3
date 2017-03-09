@@ -4,7 +4,6 @@ import {BasePage} from "../base-page";
 import {LogService} from "../../providers/log-service";
 import {CartService} from "../../providers/cart-service";
 import {ProductService} from "../../providers/product-service";
-import {CategoriesService} from "../../providers/categories-service";
 import {CartPage} from "../cart/cart";
 import {HintPopoverPage} from "../hint-popover/hint-popover";
 import {AnalyticsService} from "../../providers/analytics-service";
@@ -43,7 +42,6 @@ export class ProductPage extends BasePage implements OnInit {
                 protected changeDetectorRef: ChangeDetectorRef,
                 protected cartService: CartService,
                 protected productService: ProductService,
-                protected categoriesService: CategoriesService,
                 protected analyticsService: AnalyticsService,
                 protected popoverCtrl: PopoverController,
                 protected serviceWorker: ServiceWorker,
@@ -62,42 +60,33 @@ export class ProductPage extends BasePage implements OnInit {
     ngOnInit() {
         this.analyticsService.sendPageviewGa('/product');
         let categoryId = this.navParams.get("categoryId");
-        this.categoriesService.findAll().subscribe(
+        this.categoryTitle = this.navParams.get("categoryName");
+        this.categoryIcon = this.navParams.get("categoryIcon");
+
+        this.productService.findAll().subscribe(
             data => {
-            this.categories = data;
-            if (categoryId==undefined){
-                this.categoryTitle = 'Todas';
-                this.categoryIcon = 'globe';
-            } else
-                this.categories.forEach(item => {
-                    if (categoryId==item.id) {
-                        this.categoryTitle = item.grupo;
-                        this.categoryIcon = item.icone;
-                    }
-                });
-        },
+                this.products = data;
+                if (categoryId!=null){
+                    this.products = data.filter(product=>{
+                        let includeItem = false;
+                        if (product.hasOwnProperty('product_product_groups'))
+                            product.product_product_groups.map(group=>{
+                                if(!includeItem) includeItem = (group.id == categoryId);
+                            });
+                        return includeItem;
+                    });
+                }
+            },
             err => {
                 if(this.serviceWorker.disabled()) this.navCtrl.pop();
-                this.categoriesService.handleError(err)
+                this.productService.handleError(err)
             },
-            () => this.categoriesService.dismiss());
+            () => this.productService.dismiss());
 
-
-        if (categoryId==undefined)
-            this.productService.findAll().subscribe(
-                data => this.products = data,
-                err => this.productService.handleError(err),
-                () => this.productService.dismiss());
-        else
-            this.productService.findByCategory(categoryId).subscribe(
-                data => this.products = data,
-                err => this.productService.handleError(err),
-                () => this.productService.dismiss());
     }
 
     ionViewDidLoad() {
         this.log.l('ionViewDidLoad ProductPage');
-        // console.log(this.cartButton.nativeElement.getBoundingClientRect());
         this.showHint = true;
 
     }

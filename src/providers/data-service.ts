@@ -68,6 +68,7 @@ export class DataService {
     }
 
     handleError(error: Response | any) {
+        this.log.d('handleError:', error);
         this.loader.dismissAll();
         this.loader = this.loadingController.create({
             content: "Carregando..."

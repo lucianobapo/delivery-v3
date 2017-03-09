@@ -55,13 +55,13 @@
         </ion-item-divider>
         <ion-item>
             <div *ngFor="let category of categories" class="pull-left" padding text-center>
-                <button ion-button large outline round icon-only color="" (click)="goToProductPage(category.id)">
+                <button ion-button large outline round icon-only color="" (click)="goToProductPage(category.id, category.grupo, category.icone)">
                     <ion-icon name="{{ category.icone }}"></ion-icon>
                 </button>
                 <div>{{category.grupo}}</div>
             </div>
             <div class="pull-left" padding text-center>
-                <button ion-button large outline round icon-only color="" (click)="goToProductPage()">
+                <button ion-button large outline round icon-only color="" (click)="goToProductPage(null,'Todas','globe')">
                     <ion-icon name="globe"></ion-icon>
                 </button>
                 <div>Todas</div>

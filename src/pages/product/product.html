@@ -59,18 +59,16 @@
         </div>
 
         <ion-row>
-            <!--<ion-col>-->
-                <!--<button no-padding ion-button icon-only clear>-->
-                    <!--<ion-icon name="heart-outline" color="danger"></ion-icon>-->
-                <!--</button>-->
-            <!--</ion-col>-->
-            <ion-col text-center>
-                <button ion-button icon-only outline (click)="removeToCart(product.id)">
+            <ion-col *ngIf="product.stockQuantity<1">
+                <p class="inputError">Indisponível no momento</p>
+            </ion-col>
+            <ion-col text-center *ngIf="product.stockQuantity>0">
+                <button [disabled]="getCartQnty(product.id)==0" ion-button icon-only outline (click)="removeToCart(product.id)">
                     <ion-icon name="remove"></ion-icon>
                 </button>
             </ion-col>
-            <ion-col text-center>
-                <button ion-button icon-only outline (click)="presentPopover($event);addToCart(product.id)">
+            <ion-col text-center *ngIf="product.stockQuantity>0">
+                <button [disabled]="product.stockQuantity==getCartQnty(product.id)" ion-button icon-only outline (click)="presentPopover($event);addToCart(product.id)">
                     <ion-icon name="add"></ion-icon>
                 </button>
             </ion-col>

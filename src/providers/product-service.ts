@@ -22,7 +22,8 @@ export class ProductService {
 
     findAll(){
         return this.dataService
-            .httpGet('product?with=productProductGroups&orderBy=nome&search=4')
+            .httpGet('delivery/productStock')
+            // .httpGet('product?with=productProductGroups&orderBy=nome&search=4')
             .map(res => {
                 this.data = res.json().data;
                 if( this.data !== null && (typeof  this.data) == 'object')
@@ -60,25 +61,11 @@ export class ProductService {
         this.dataService.dismiss();
     }
 
-    getValorVenda(productId) {
-        let valorUnitVenda = 0;
+    getField(productId, field) {
+        let value = null;
         this.data.forEach(item => {
-            if (item.id==productId) valorUnitVenda = item.valorUnitVenda;
+            if (item.id==productId) value = item[field];
         });
-        return valorUnitVenda;
-    }
-    getNome(productId) {
-        let nome = '';
-        this.data.forEach(item => {
-            if (item.id==productId) nome = item.nome;
-        });
-        return nome;
-    }
-    getCostId(productId) {
-        let costId = null;
-        this.data.forEach(item => {
-            if (item.id==productId) costId = item.cost_id;
-        });
-        return costId;
+        return value;
     }
 }

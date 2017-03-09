@@ -3,7 +3,6 @@ import {Component, ViewChild, OnInit} from '@angular/core';
 import {NavController} from 'ionic-angular';
 
 import {CategoriesService} from '../../providers/categories-service';
-import {ProductService} from '../../providers/product-service';
 import {LogService} from "../../providers/log-service";
 
 import {ProductPage} from "../product/product";
@@ -26,7 +25,6 @@ export class HomePage extends BasePage implements OnInit {
     constructor(protected navCtrl: NavController,
                 protected log: LogService,
                 protected categoriesService: CategoriesService,
-                protected productService: ProductService,
                 protected analyticsService: AnalyticsService,
                 protected cartService: CartService,
                 protected connectivityMonitorService: ConnectivityMonitorService) {
@@ -43,10 +41,15 @@ export class HomePage extends BasePage implements OnInit {
             data => this.categories = data,
             err => this.categoriesService.handleError(err),
             () => this.categoriesService.dismiss());
+
     }
 
-    goToProductPage(categoryId){
-        this.navCtrl.push(ProductPage, {categoryId: categoryId});
+    goToProductPage(categoryId, categoryName, categoryIcon){
+        this.navCtrl.push(ProductPage, {
+            categoryId: categoryId,
+            categoryName: categoryName,
+            categoryIcon: categoryIcon
+        });
     }
 
     goToCartPage(){

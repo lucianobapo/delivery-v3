@@ -79,21 +79,23 @@ export class CartService {
         let updatedItems = this.items.value;
         let itemFields = {
             mandante: this.mandante,
-            cost_id: this.productService.getCostId(productId),
-            nome: this.productService.getNome(productId),
+            cost_id: this.productService.getField(productId, 'cost_id'),
+            nome: this.productService.getField(productId, 'nome'),
+            stockQuantity: this.productService.getField(productId, 'stockQuantity'),
             product_id: productId,
             quantidade: 1,
-            valor_unitario: this.productService.getValorVenda(productId)
+            valor_unitario: this.productService.getField(productId, 'valorUnitVenda')
         };
 
         this.analyticsService.sendAddProductGa(itemFields);
 
-        if (this.foundItem(productId))
-            updatedItems[this.itemIndex(productId)].quantidade++;
-        else
-            {
-                updatedItems.push(itemFields);
-            }
+        if (this.foundItem(productId)) {
+            let index = this.itemIndex(productId);
+            if (updatedItems[index].quantidade < updatedItems[index].stockQuantity)
+                updatedItems[index].quantidade++;
+        } else {
+            updatedItems.push(itemFields);
+        }
         this.items.setValue(updatedItems);
     }
 
@@ -106,10 +108,6 @@ export class CartService {
             if(updatedItems[index].quantidade==0)
                 updatedItems.splice(index, 1);
             this.items.setValue(updatedItems);
-
-            // this.cartContent.items[index].quantidade--;
-            // if(this.cartContent.items[index].quantidade==0)
-            //     this.cartContent.items.splice(index, 1);
         }
 
     }
@@ -131,25 +129,20 @@ export class CartService {
         return this.items.value.findIndex((item) => {
             return item.product_id == productId;
         });
-        // return this.cartContent.items.findIndex((item) => {
-        //     return item.product_id == productId;
-        // });
     }
 
     hasInCart(productId):boolean {
         return this.foundItem(productId);
     }
+
     getCartQnty(productId) {
         if (this.foundItem(productId))
             return this.items.value[this.itemIndex(productId)].quantidade;
-            // return this.cartContent.items[this.itemIndex(productId)].quantidade;
         return 0;
     }
     getCartItems() {
         if (this.items == undefined) return [];
         return this.items.value;
-
-        // return this.cartContent.items;
     }
 
     hasCartValue():boolean {
@@ -160,13 +153,11 @@ export class CartService {
         let soma = 0;
         if (this.items.value.constructor == Array && this.items.value.length>0)
             this.items.value.forEach(item => soma = soma + (item.quantidade * item.valor_unitario));
-        // if (this.cartContent.items.length>0)
-        //     this.cartContent.items.forEach(item => soma = soma + (item.quantidade * item.valor_unitario));
         return soma;
     }
 
     getNome(productId) {
-        return this.productService.getNome(productId);
+        return this.productService.getField(productId, 'nome');
     }
 
     submitOrder() {
