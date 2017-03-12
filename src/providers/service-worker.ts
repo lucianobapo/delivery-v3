@@ -1,8 +1,7 @@
-///<reference path="../service-worker.d.ts"/>
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
-import {ServiceWorkerContainer} from "../service-worker";
 import {LogService} from "./log-service";
+import {ServiceWorkerContainer} from "../service-worker";
 
 declare interface Navigator {
     serviceWorker: ServiceWorkerContainer;

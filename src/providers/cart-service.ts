@@ -63,7 +63,7 @@ export class CartService {
             nome: this.nome,
             cep: this.cep,
             logradouro: this.logradouro,
-            bairro:  this.bairro,
+            bairro: this.bairro,
             numero: this.numero,
             complemento: [''],
             troco: [''],
@@ -100,20 +100,20 @@ export class CartService {
     }
 
     remove(productId) {
-        if (this.foundItem(productId)){
+        if (this.foundItem(productId)) {
             let index = this.itemIndex(productId);
 
             let updatedItems = this.items.value;
             updatedItems[index].quantidade--;
-            if(updatedItems[index].quantidade==0)
+            if (updatedItems[index].quantidade == 0)
                 updatedItems.splice(index, 1);
             this.items.setValue(updatedItems);
         }
 
     }
 
-    removeItem(itemToRemove){
-        if (this.foundItem(itemToRemove.product_id)){
+    removeItem(itemToRemove) {
+        if (this.foundItem(itemToRemove.product_id)) {
             // this.cartContent.items.splice(this.itemIndex(itemToRemove.product_id), 1);
             let updatedItems = this.items.value;
             updatedItems.splice(this.itemIndex(itemToRemove.product_id), 1);
@@ -121,17 +121,17 @@ export class CartService {
         }
     }
 
-    private foundItem(productId):boolean{
-        return (this.itemIndex(productId)!=-1);
+    private foundItem(productId): boolean {
+        return (this.itemIndex(productId) != -1);
     }
 
-    private itemIndex(productId){
+    private itemIndex(productId) {
         return this.items.value.findIndex((item) => {
             return item.product_id == productId;
         });
     }
 
-    hasInCart(productId):boolean {
+    hasInCart(productId): boolean {
         return this.foundItem(productId);
     }
 
@@ -140,18 +140,19 @@ export class CartService {
             return this.items.value[this.itemIndex(productId)].quantidade;
         return 0;
     }
+
     getCartItems() {
         if (this.items == undefined) return [];
         return this.items.value;
     }
 
-    hasCartValue():boolean {
-        return this.getTotalCart()>0;
+    hasCartValue(): boolean {
+        return this.getTotalCart() > 0;
     }
 
     getTotalCart() {
         let soma = 0;
-        if (this.items.value.constructor == Array && this.items.value.length>0)
+        if (this.items.value.constructor == Array && this.items.value.length > 0)
             this.items.value.forEach(item => soma = soma + (item.quantidade * item.valor_unitario));
         return soma;
     }
@@ -163,9 +164,9 @@ export class CartService {
     submitOrder() {
         this.analyticsService.sendOrderGa();
         this.order.controls['posted_at'].setValue(CartService.getFormattedDate());
-        if (this.order.controls['troco'].value!=''){
-            let newObservacao = 'Troco: '+this.order.controls['troco'].value;
-            if (this.order.controls['observacao'].value!='') newObservacao = newObservacao +' - '+this.order.controls['observacao'].value;
+        if (this.order.controls['troco'].value != '') {
+            let newObservacao = 'Troco: ' + this.order.controls['troco'].value;
+            if (this.order.controls['observacao'].value != '') newObservacao = newObservacao + ' - ' + this.order.controls['observacao'].value;
             this.order.controls['observacao'].setValue(newObservacao);
         }
 
@@ -186,52 +187,54 @@ export class CartService {
     }
 
     clearItems(orderCreated) {
-       return this.dataService.httpGet('order/'+orderCreated.id)
+        this.items.setValue([]);
+        return this.dataService.httpGet('order/' + orderCreated.id)
             .map(res => res.json().data);
     }
 
-    setOrderCreated(order){
+    setOrderCreated(order) {
         this.orderCreated = order;
     }
-    getOrderCreated(){
-        if(this.orderCreated) return this.orderCreated;
+
+    getOrderCreated() {
+        if (this.orderCreated) return this.orderCreated;
         return null;
     }
 
-    protected static getFormattedDate(){
+    protected static getFormattedDate() {
         let date = new Date();
         let mm = date.getMonth() + 1;
         let dd = date.getDate();
 
         let dateFormatted = [date.getFullYear(),
-            (mm>9 ? '' : '0') + mm,
-            (dd>9 ? '' : '0') + dd
+            (mm > 9 ? '' : '0') + mm,
+            (dd > 9 ? '' : '0') + dd
         ].join('-');
 
         let hh = date.getHours();
         let ii = date.getMinutes();
         let ss = date.getSeconds();
         let timeFormatted = [
-            (hh>9 ? '' : '0') + hh,
-            (ii>9 ? '' : '0') + ii,
-            (ss>9 ? '' : '0') + ss
+            (hh > 9 ? '' : '0') + hh,
+            (ii > 9 ? '' : '0') + ii,
+            (ss > 9 ? '' : '0') + ss
         ].join(':');
 
         return [dateFormatted, timeFormatted].join(' ');
     }
 
-    protected static contactsValidator(group: FormGroup):any {
+    protected static contactsValidator(group: FormGroup): any {
         if (!group.controls['emailCheck'].value && !group.controls['smsCheck'].value && !group.controls['whatsappCheck'].value)
             return {contactsInvalid: true};
 
         let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        let passouEmailCheck = (group.controls['email'].value!='' && emailPattern.test(group.controls['email'].value));
+        let passouEmailCheck = (group.controls['email'].value != '' && emailPattern.test(group.controls['email'].value));
         if (group.controls['emailCheck'].value && !passouEmailCheck) return {emailInvalid: true};
 
-        let passouSmsCheck = (group.controls['sms'].value!='');
+        let passouSmsCheck = (group.controls['sms'].value != '');
         if (group.controls['smsCheck'].value && !passouSmsCheck) return {smsInvalid: true};
 
-        let passouWhatsappCheck = (group.controls['whatsapp'].value!='');
+        let passouWhatsappCheck = (group.controls['whatsapp'].value != '');
         if (group.controls['whatsappCheck'].value && !passouWhatsappCheck) return {whatsappInvalid: true};
 
         return null;
@@ -248,16 +251,16 @@ export class CartService {
         // }
     }
 
-    protected static itemsValidator(control: AbstractControl):any {
-        if(control.value.constructor == Array && control.value.length>0){
+    protected static itemsValidator(control: AbstractControl): any {
+        if (control.value.constructor == Array && control.value.length > 0) {
             let soma = 0;
             control.value.map(item => {
                 soma = soma + item.quantidade * item.valor_unitario;
             });
-            if (soma<20) return { minimum_value: true };
+            if (soma < 20) return {minimum_value: true};
             else return null;
         }
-        else return { required: true };
+        else return {required: true};
     }
 
     formBuild(field): FormControl {
@@ -266,8 +269,8 @@ export class CartService {
 
     setAddressValues(item: any) {
         let propertyNames = Object.getOwnPropertyNames(item);
-        propertyNames.map(propertyName=>{
-            if (propertyName!='complemento' && this.order.controls.hasOwnProperty(propertyName))
+        propertyNames.map(propertyName => {
+            if (propertyName != 'complemento' && this.order.controls.hasOwnProperty(propertyName))
                 this.order.controls[propertyName].setValue(item[propertyName]);
         });
     }
@@ -283,7 +286,8 @@ export class CartService {
     fieldIsInvalid(field) {
         return !this[field].valid;
     }
+
     fieldErr(field, error = 'required') {
-        return (this[field].errors!==null && this[field].errors.hasOwnProperty(error) && this[field].errors[error]);
+        return (this[field].errors !== null && this[field].errors.hasOwnProperty(error) && this[field].errors[error]);
     }
 }

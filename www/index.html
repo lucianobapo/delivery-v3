@@ -45,6 +45,29 @@
 //            })
 //            .catch(err => console.log('Error', err));
 //    }
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '1630647053816087',
+            status     : true,
+            xfbml      : true,
+            version    : 'v2.8'
+        });
+        FB.AppEvents.logPageView();
+    };
+
+    window.___gcfg = {
+        lang: 'pt-BR',
+        parsetags: 'onload'
+    };
+
+    window.gapiOnLoadCallback = function() {
+        gapi.load('auth2', ()=> {
+            gapi.auth2.init({
+                client_id: '4910560041-g7fqeg0ibo10eid6q4c0qn1jqnk3airq.apps.googleusercontent.com'
+            }).then((...params)=>{}, (...params)=>console.error('gapi error:', params));
+        });
+
+    };
 
     (function(doc, elementName) {
         var elToInsert,
@@ -58,6 +81,8 @@
                     id && (elToInsert.id = id);
                     fjs.parentNode.insertBefore(elToInsert, fjs);
                 };
+        addScript('https://connect.facebook.net/pt_BR/sdk.js', 'facebook-jssdk');
+        addScript('https://apis.google.com/js/platform.js?publisherid=103256085356577396632&onload=gapiOnLoadCallback');
 //        addScript('https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.min.js');
 //        addScript('https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/shim.min.js');
 //        addScript('build/polyfills.js');

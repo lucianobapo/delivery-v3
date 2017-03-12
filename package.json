@@ -1,7 +1,7 @@
 {
   "name": "delivery-v3",
   "author": "Luciano Porto",
-  "homepage": "http://ionicframework.com/",
+  "homepage": "http://ilhanet.com/",
   "private": true,
   "config": {
     "ionic_copy": "./src/config/copy.config.js"
@@ -35,6 +35,10 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "^1.0.0",
+    "@types/fb": "0.0.22",
+    "@types/gapi": "0.0.30",
+    "@types/gapi.auth2": "0.0.34",
+    "@types/node": "^7.0.8",
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "gulp-htmlmin": "^3.0.0",
@@ -49,7 +53,22 @@
     "cordova-plugin-device",
     "cordova-plugin-console",
     "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    {
+      "id": "cordova-plugin-facebook4",
+      "locator": "cordova-plugin-facebook4",
+      "variables": {
+        "APP_ID": "1630647053816087",
+        "APP_NAME": "delivery-v3"
+      }
+    },
+    {
+      "id": "cordova-plugin-googleplus",
+      "locator": "cordova-plugin-googleplus",
+      "variables": {
+        "REVERSED_CLIENT_ID": "4910560041-697h1bpjt70pranrevpdihn9g0unurog.apps.googleusercontent.com"
+      }
+    }
   ],
   "cordovaPlatforms": [
     {

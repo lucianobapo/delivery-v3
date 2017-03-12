@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams, ViewController} from 'ionic-angular';
 import {CartService} from "../../providers/cart-service";
 import {LogService} from "../../providers/log-service";
 import {AnalyticsService} from "../../providers/analytics-service";
@@ -21,6 +21,7 @@ export class CheckoutPage implements OnInit {
     public pagamento;
     public observacao;
     public order_items;
+    public valor_total;
     public contacts;
     public address = {
         cep:'',
@@ -34,9 +35,14 @@ export class CheckoutPage implements OnInit {
                 protected cartService: CartService,
                 protected navParams: NavParams,
                 protected analyticsService: AnalyticsService,
+                protected viewCtrl: ViewController,
                 protected log: LogService,
                 protected connectivityMonitorService: ConnectivityMonitorService) {
         this.fillOrder();
+    }
+
+    ionViewWillEnter() {
+        this.viewCtrl.showBackButton(false);
     }
 
     ionViewDidLoad() {
@@ -46,6 +52,10 @@ export class CheckoutPage implements OnInit {
 
     ngOnInit() {
         this.fillOrder();
+    }
+
+    goToHome(){
+        this.navCtrl.popToRoot();
     }
 
     protected fillOrder(){
@@ -61,7 +71,14 @@ export class CheckoutPage implements OnInit {
                 if (order.partner.hasOwnProperty('contacts'))
                     this.contacts = order.partner.contacts;
             }
-            if (order.hasOwnProperty('order_items')) this.order_items = order.order_items;
+            if (order.hasOwnProperty('order_items')) {
+                let soma = 0;
+                order.order_items.map(item=>{
+                    soma = soma + (item.quantidade*item.valor_unitario);
+                });
+                this.valor_total = soma;
+                this.order_items = order.order_items;
+            }
         }
     }
 

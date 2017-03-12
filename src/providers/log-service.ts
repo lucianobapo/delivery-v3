@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
+import {Platform} from "ionic-angular";
 
 /*
  Generated class for the LogService provider.
@@ -15,7 +16,7 @@ let error = true;
 @Injectable()
 export class LogService {
 
-    constructor() {
+    constructor(protected platform: Platform) {
         this.l('Hello LogService Provider');
     }
 
@@ -28,8 +29,11 @@ export class LogService {
 
     d(...args) {
         if (debug)
-            [].slice.apply(args).forEach(function (value) {
-                console.debug(value);
+            [].slice.apply(args).forEach(value=>{
+                if (this.platform.is('cordova'))
+                    console.error(value);
+                else
+                    console.debug(value);
             });
     }
 

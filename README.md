@@ -8,6 +8,11 @@ npm install font-awesome --save-dev
 php artisan vendor:publish --tag=erpnetWidgetResourceGulpfile
 gulp --gulpfile=gulpfileErpnetWidgetResource.js
 ```
+***plugins***
+```shell
+ionic plugin add cordova-plugin-facebook4 --variable APP_ID="123456789" --variable APP_NAME="myApplication"
+ionic plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID=
+```
 
 ***Updating run***
 ```shell

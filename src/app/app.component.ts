@@ -13,6 +13,8 @@ import {CepService} from "../providers/cep-service";
 import {AnalyticsService} from "../providers/analytics-service";
 import {ConnectivityMonitorService} from "../providers/connectivity-monitor-service";
 import {ServiceWorker} from "../providers/service-worker";
+import {FacebookService} from "../providers/facebook-service";
+import {GoogleService} from "../providers/google-service";
 
 @Component({
     templateUrl: 'app.html',
@@ -25,6 +27,8 @@ import {ServiceWorker} from "../providers/service-worker";
         ProductService,
         AnalyticsService,
         ConnectivityMonitorService,
+        FacebookService,
+        GoogleService,
         ServiceWorker
     ]
 })

@@ -42,10 +42,16 @@ export class ConnectivityMonitorService {
     }
 
     setOnline() {
-        if (!this.platform.is('cordova') && navigator.onLine) {
+        if (this.platform.is('cordova')) {
             this.log.l("went online");
             this.online = true;
+        } else {
+            if (navigator.onLine) {
+                this.log.l("went online");
+                this.online = true;
+            }
         }
+
     }
 
     setOffline() {

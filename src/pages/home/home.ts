@@ -1,6 +1,6 @@
 import {Component, ViewChild, OnInit} from '@angular/core';
 
-import {NavController} from 'ionic-angular';
+import {NavController, AlertController} from 'ionic-angular';
 
 import {CategoriesService} from '../../providers/categories-service';
 import {LogService} from "../../providers/log-service";
@@ -11,6 +11,8 @@ import {CartService} from "../../providers/cart-service";
 import {CartPage} from "../cart/cart";
 import {AnalyticsService} from "../../providers/analytics-service";
 import {ConnectivityMonitorService} from "../../providers/connectivity-monitor-service";
+import {FacebookService} from "../../providers/facebook-service";
+import {GoogleService} from "../../providers/google-service";
 
 @Component({
     selector: 'page-home',
@@ -27,8 +29,12 @@ export class HomePage extends BasePage implements OnInit {
                 protected categoriesService: CategoriesService,
                 protected analyticsService: AnalyticsService,
                 protected cartService: CartService,
-                protected connectivityMonitorService: ConnectivityMonitorService) {
+                protected facebookService: FacebookService,
+                protected googleService: GoogleService,
+                protected connectivityMonitorService: ConnectivityMonitorService,
+                protected alertCtrl: AlertController) {
         super();
+
     }
 
     ionViewDidLoad() {
@@ -54,6 +60,60 @@ export class HomePage extends BasePage implements OnInit {
 
     goToCartPage(){
         this.navCtrl.push(CartPage);
+    }
+
+    presentPrompt() {
+        let alert = this.alertCtrl.create({
+            title: 'Login',
+            subTitle: 'Delivery 24 Horas',
+            message: 'Digite seu email e senha. Caso nao tenha senha você pode criar um usuário',
+            inputs: [
+                {
+                    name: 'email',
+                    placeholder: 'Email',
+                    type: 'email'
+                },
+                {
+                    name: 'password',
+                    placeholder: 'Senha',
+                    type: 'password'
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: data => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Criar',
+                    handler: data => {
+                        if (false) {
+                        // if (User.isValid(data.username, data.password)) {
+                            // logged in!
+                        } else {
+                            // invalid login
+                            return false;
+                        }
+                    }
+                },
+                {
+                    text: 'Login',
+                    handler: data => {
+                        if (false) {
+                        // if (User.isValid(data.username, data.password)) {
+                            // logged in!
+                        } else {
+                            // invalid login
+                            return false;
+                        }
+                    }
+                }
+            ]
+        });
+        alert.present();
     }
 
 }

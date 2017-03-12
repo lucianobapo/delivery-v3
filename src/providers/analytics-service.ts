@@ -87,4 +87,13 @@ export class AnalyticsService {
     private renewTransactionId() {
         this.transactionId = Date.now();
     }
+
+    sendLoginGa(provider: string) {
+        if (this.connectivityMonitorService.isOffline()) return;
+        this.googleAnalytics('send', 'event', {
+            'eventCategory': 'Pages',
+            'eventAction': 'Login',
+            'eventLabel': provider
+        });
+    }
 }

@@ -16,16 +16,15 @@
                 <ion-icon name="cart"></ion-icon>
                 <ion-badge color="secondary" *ngIf="hasCartValue()">{{ getTotalCart() | currency:'BRL':true:'1.2-2' }}</ion-badge>
             </button>
-            <button ion-button icon-only (click)="startSearch($event)">
-                <ion-icon name="search"></ion-icon>
-            </button>
+            <!--<button ion-button icon-only (click)="startSearch($event)">-->
+                <!--<ion-icon name="search"></ion-icon>-->
+            <!--</button>-->
         </ion-buttons>
 
         <ion-searchbar #search *ngIf="isSearching()" placeholder="Busca de produtos"
                        animated="true" showCancelButton="false"
                        (ionBlur)="onBlur($event)" (ionInput)="onInput($event)"
                        (ionCancel)="onCancel($event)" (ionClear)="onClear($event)">
-
         </ion-searchbar>
     </ion-navbar>
 
